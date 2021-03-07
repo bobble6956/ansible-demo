@@ -1,6 +1,8 @@
 # ansible-demo
 
-Please prepare the following environment variable:
+### Please prepare the following environment variable:
+
+```
 [General]
 katello_ca_url: ''
 rhn_username: ''
@@ -13,7 +15,8 @@ activationkey: ''
 vietnam_ntp_pool:
   - ''
   - ''
-
+```
+```
 [VCENTER]
 vsphere_folder: ''
 vsphere_port_group: ''
@@ -32,7 +35,8 @@ vcenter_datastore: ''
 local_ntp_server:
   - ''
   - ''
-
+```
+```
 [AWS]
 ec2_key_pair: ''
 instance_type: ''
@@ -43,3 +47,4 @@ security_group: ''
 activationkey: ''
 local_ntp_server:
   - ''
+```
