@@ -2,7 +2,6 @@
 - name:  Config Webservers
   hosts: all
   gather_facts: true
-  
   tasks: 
   - name: Check which hypervisor is used
     command: virt-what

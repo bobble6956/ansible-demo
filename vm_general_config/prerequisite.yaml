@@ -1,7 +1,6 @@
 ---
 - name:  Config generic VMs
   hosts: all
-  gather_facts: false
   tasks:
   - name: install required packages
     package:
@@ -10,12 +9,12 @@
       - policycoreutils-python-utils
       - insights-client
       state: present
-
+      
   - name: Install a modularity appstream with defined stream
     dnf:
-      name: '@nodejs:14'
-      state: latest
- 
+      name: "@nodejs:14"
+      state: present
+      
   - name: Copy over the chronyd configuration
     template: 
       src: chrony.jinja2
