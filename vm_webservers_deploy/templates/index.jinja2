@@ -1,4 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> {{ activationkey }} </title>
+</head>
+<body>
+
 <h2><strong>Địa chỉ IP: {{ ansible_default_ipv4.address }}</strong></h2>
+<div>
+<h2><strong><span>Phiên bản NodeJS: {{ ansible_facts.packages['nodejs'][0].version }} </strong></h2>
+</div>
 <div>
 <blockquote><span>Số lượng CPU: {{ ansible_processor_vcpus }}</span></blockquote>
 </div>

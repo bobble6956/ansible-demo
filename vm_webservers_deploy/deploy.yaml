@@ -1,7 +1,11 @@
 ---
 - name: Deploy web content
   hosts: all
-  tasks: 
+  tasks:
+  - name: Gather the rpm package facts
+    package_facts:
+      manager: auto
+      
   - name: Copy over the httpd index
     template: 
       src: index.jinja2
