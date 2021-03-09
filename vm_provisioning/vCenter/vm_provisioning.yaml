@@ -13,6 +13,9 @@
       template: '{{ vm_template }}'
       name: '{{ inventory_hostname }}.{{ vm_domain_name }}'
       esxi_hostname: '{{ esxi_hostname }}'
+      hardware:
+        memory_mb: '{{ memory_mb }}'
+        num_cpus: '{{ num_cpus }}'
       networks:
       - name: '{{ vsphere_port_group }}'
         ip: '{{ ansible_host }}'
