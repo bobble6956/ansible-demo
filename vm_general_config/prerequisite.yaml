@@ -9,6 +9,7 @@
       - policycoreutils-python-utils
       - insights-client
       state: present
+      
   - name: Install a modularity appstream with defined stream
     dnf:
       name: "@nodejs:14"
