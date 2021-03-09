@@ -1,7 +1,6 @@
 ---
 - name:  Config generic VMs
   hosts: all
-  gather_facts: false
   tasks:
   - name: install required packages
     package:
