@@ -10,17 +10,6 @@
     notify:
     - restart httpd
     
-  - name: Copy over the httpd index
-    copy: 
-      src: index_html_image.gif
-      dest: /var/www/html/index_html_image.gif
-      owner: root
-      group: root
-      mode: 0644
-      backup: yes
-    notify:
-    - restart httpd
-
   handlers:
   - name: restart httpd
     service: 
