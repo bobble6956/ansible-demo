@@ -43,6 +43,15 @@
       - haproxy
       - httpd
       state: present
+
+  - name: Enable service httpd, haproxy
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - httpd
+      - haproxy      
       
   - name: Copy over the haproxy configuration
     template: 
@@ -57,14 +66,7 @@
       dest: /etc/httpd/conf/httpd.conf
     notify:
     - restart httpd
-
-  - name: Enable service httpd, haproxy
-    service:
-      name: 
-      - httpd
-      - haproxy
-      enabled: yes
-
+ 
   handlers:
   - name: restart httpd
     service: 
