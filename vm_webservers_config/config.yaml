@@ -25,7 +25,19 @@
       state: yes
       persistent: yes
 
-  - name: install required packages
+  - name: install the latest version of VMware guess-tools
+    yum:
+      name: open-vm-tools
+      state: latest
+    when: hypervisor.stdout == "vmware"
+
+  - name: install the latest version of RHV guess-tools
+    yum:
+      name: ovirt-guest-agent-common
+      state: latest
+    when: hypervisor.stdout == "kvm"
+
+  - name: install web, haproxy packages
     package:
       name:
       - haproxy
@@ -45,6 +57,13 @@
       dest: /etc/httpd/conf/httpd.conf
     notify:
     - restart httpd
+
+  - name: Enable service httpd, haproxy
+    service:
+      name: 
+      - httpd
+      - haproxy
+      enabled: yes
 
   handlers:
   - name: restart httpd
