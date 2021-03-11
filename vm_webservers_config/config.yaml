@@ -2,11 +2,7 @@
 - name:  Config Webservers
   hosts: all
   gather_facts: true
-  tasks: 
-  - name: Check which hypervisor is used
-    command: virt-what
-    register: hypervisor   
-
+  tasks:
   - name: Firewall configure
     firewalld:
       port: "{{ item }}"
@@ -17,41 +13,13 @@
     - 80/tcp
     - 3091/tcp
     - 8080/tcp
-    when: hypervisor.stdout == "vmware" or hypervisor.stdout == "kvm"
+    when: ansible_distribution == "RedHat" and ansible_system_vendor != "Xen"
 
   - name: SELinux configure
     seboolean:
       name: haproxy_connect_any
       state: yes
       persistent: yes
-
-  - name: install the latest version of VMware guess-tools
-    yum:
-      name: open-vm-tools
-      state: latest
-    when: hypervisor.stdout == "vmware"
-
-  - name: install the latest version of RHV guess-tools
-    yum:
-      name: ovirt-guest-agent-common
-      state: latest
-    when: hypervisor.stdout == "kvm"
-
-  - name: install web, haproxy packages
-    package:
-      name:
-      - haproxy
-      - httpd
-      state: present
-
-  - name: Enable service httpd, haproxy
-    service:
-      name: "{{ item }}"
-      enabled: yes
-      state: started
-    with_items:
-      - httpd
-      - haproxy      
       
   - name: Copy over the haproxy configuration
     template: 
@@ -66,6 +34,15 @@
       dest: /etc/httpd/conf/httpd.conf
     notify:
     - restart httpd
+  
+  - name: Enable service httpd, haproxy
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - httpd
+      - haproxy     
  
   handlers:
   - name: restart httpd

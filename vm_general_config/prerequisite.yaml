@@ -9,7 +9,6 @@
       file: redhat-rhui-client-config
       state: absent
     when: ansible_distribution == "RedHat" and ansible_system_vendor == "Xen"
-    notify: yum-clean-metadata
 
   - name: Disable YUM Repo
     yum_repository:
@@ -20,19 +19,34 @@
     with_items:
       - rhel-8-appstream-rhui-rpms
       - rhel-8-baseos-rhui-rpms
-    notify: yum-clean-metadata
 
   - name: Install a modularity appstream with defined stream
     dnf:
       name: "@nodejs:14"
       state: present
+    tags: nodejs  
 
   - name: install required packages
     package:
       name:
       - policycoreutils-python-utils
+      - haproxy
+      - httpd
+      - chrony
       state: present
-      
+
+  - name: install the latest version of VMware guess-tools
+    yum:
+      name: open-vm-tools
+      state: latest
+    when: ansible_virtualization_type == "VMware"
+
+  - name: install the latest version of RHV guess-tools
+    yum:
+      name: ovirt-guest-agent-common
+      state: latest
+    when: ansible_virtualization_type == "kvm"
+    
   - name: Copy over the chronyd configuration
     template: 
       src: chrony.jinja2
@@ -45,8 +59,3 @@
     service: 
       name: chronyd  
       state: restarted
-  
-  - name: yum-clean-metadata
-    command: yum clean metadata
-    args:
-      warn: no
