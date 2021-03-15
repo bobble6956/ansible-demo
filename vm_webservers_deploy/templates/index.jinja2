@@ -7,13 +7,16 @@
 
 <h2><strong>Địa chỉ IP: {{ ansible_default_ipv4.address }}</strong></h2>
 <div>
-<h2><strong><span>Phiên bản NodeJS: {{ ansible_facts.packages['nodejs'][0].version }} </strong></h2>
+<h2><strong><span>Phiên bản NodeJS:<span style="color: #ff0000;"> {{ ansible_facts.packages['nodejs'][0].version }} </span></strong></h2>
 </div>
 <div>
 <blockquote><span>Số lượng CPU: {{ ansible_processor_vcpus }}</span></blockquote>
 </div>
 <div>
-<blockquote><span>Hypervisor: {{ ansible_virtualization_type }} {{ ansible_product_version }}</span></blockquote>
+<blockquote><span>Dung lượng memory: {{ ansible_memtotal_mb }}</span></blockquote>
+</div>
+<div>
+<blockquote><span>Hypervisor: {{ ansible_system_vendor }}</span></blockquote>
 </div>
 <div>
 <blockquote><span>Phiên bản hệ điều hành: {{ ansible_distribution_version }}</span></blockquote>
