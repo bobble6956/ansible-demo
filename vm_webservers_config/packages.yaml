@@ -1,0 +1,17 @@
+- name:  Config generic VMs
+  hosts: all
+  gather_facts: false
+  tasks:    
+  - name: Install a modularity appstream with defined stream
+    dnf:
+      name: "@nodejs:14"
+      state: present
+    tags: nodejs  
+
+  - name: install required packages
+    package:
+      name:
+      - haproxy
+      - httpd
+      state: present
+    tags: webserver

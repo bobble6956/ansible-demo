@@ -5,33 +5,22 @@
   tasks:    
   - name: Disable YUM Repo
     yum_repository:
-      name: rhui-client-config-server-8
-      file: redhat-rhui-client-config
+      name: "{{ item.name }}"
+      file: "{{ item.file }}"
       state: absent
     when: ansible_distribution == "RedHat" and ansible_system_vendor == "Xen"
-
-  - name: Disable YUM Repo
-    yum_repository:
-      name: "{{ item }}"
-      file: redhat-rhui
-      state: absent
-    when: ansible_distribution == "RedHat" and ansible_system_vendor == "Xen"
-    with_items:
-      - rhel-8-appstream-rhui-rpms
-      - rhel-8-baseos-rhui-rpms
-
-  - name: Install a modularity appstream with defined stream
-    dnf:
-      name: "@nodejs:14"
-      state: present
-    tags: nodejs  
+    loop:
+      - name: rhui-client-config-server-8
+        file: redhat-rhui-client-config
+      - name: rhel-8-appstream-rhui-rpms
+        file: redhat-rhui
+      - name: rhel-8-baseos-rhui-rpms
+        file: redhat-rhui
 
   - name: install required packages
     package:
       name:
       - policycoreutils-python-utils
-      - haproxy
-      - httpd
       - chrony
       state: present
 
