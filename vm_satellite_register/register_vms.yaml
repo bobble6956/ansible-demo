@@ -11,6 +11,7 @@
       name: '{{ katello_ca_url }}'
       state: present
       disable_gpg_check: yes
+      validate_certs: no
   
   - name: Set authorized key taken from file
     authorized_key:
