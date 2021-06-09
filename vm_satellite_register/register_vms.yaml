@@ -18,6 +18,7 @@
       user: root
       state: present
       key: "{{ item }}"
+      validate_certs: no
     loop:
     - "{{ foreman_pubkey_url }}"
     - "{{ ansible_pubkey }}"
